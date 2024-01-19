@@ -1,0 +1,373 @@
+@import 'content-grid.css';
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+:root {
+  --color-scheme: light;
+
+  --font-family: 'Rubik', sans-serif;
+  --font-family-heading: 'Bebas Neue', sans-serif;
+
+  --fs-300: clamp(0.94rem, calc(0.92rem + 0.08vw), 0.98rem);
+  --fs-400: clamp(1.13rem, calc(1.06rem + 0.33vw), 1.31rem);
+  --fs-500: clamp(1.35rem, calc(1.21rem + 0.69vw), 1.75rem);
+  --fs-600: clamp(1.62rem, calc(1.37rem + 1.24vw), 2.33rem);
+  --fs-700: clamp(1.94rem, calc(1.54rem + 2.03vw), 3.11rem);
+  --fs-800: clamp(2.33rem, calc(1.7rem + 3.15vw), 4.14rem);
+  --fs-900: clamp(2.8rem, calc(1.85rem + 4.74vw), 8.52rem);
+
+  --clr-primary-100: #e9f0fb;
+  --clr-primary-300: #999999;
+  --clr-primary-400: #4d4d4d;
+  --clr-primary-500: #252525;
+  --clr-secondary-300: #b1b4bc;
+  --clr-secondary-400: #414f6a;
+  --clr-secondary-500: #202835;
+  --clr-accent-200: hsl(358, 85%, 80%);
+  --clr-accent-300: hsl(358, 72%, 65%);
+  --clr-accent-400: hsl(358, 72%, 50%);
+  --clr-accent-500: hsl(358, 72%, 35%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: var(--color-scheme);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--fs-400);
+  line-height: 1.6;
+  counter-reset: section;
+  color: var(--clr-secondary-500);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.bg-primary {
+  background: var(--clr-primary-100);
+}
+.bg-secondary {
+  background: var(--clr-secondary-400);
+}
+
+.flow > * + * {
+  margin-top: var(--flow-spacing, 1em);
+}
+
+
+[hidden] {
+  display: none !important;
+}
+
+.section-title {
+  font-family: var(--font-family-heading);
+  font-size: var(--fs-800);
+  line-height: 1.1;
+  color: var(--clr-secondary-400);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.section-title > span {
+  translate: -0.4em;
+}
+
+.section-title::before {
+  counter-increment: section;
+  content: '0' counter(section) '.';
+  font-size: 2.5em;
+}
+
+.primary-header {
+  padding-block: 1rem;
+  position: absolute;
+  width: 100%;
+  background: transparent;
+  color: var(--clr-primary-100);
+}
+
+.sticky-header {
+  padding-block: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100000;
+}
+
+.primary-header__layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  max-width: 250px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: max(5vw, 1rem);
+}
+
+nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+nav a:hover,
+nav a:focus {
+  color: var(--clr-accent-500);
+  text-decoration: underline;
+}
+
+.even-columns {
+  display: flex;
+  gap: 1rem;
+}
+
+.site-title {
+  font-size: var(--fs-900);
+  line-height: 0.85;
+  text-transform: uppercase;
+  color: var(--clr-primary-300);
+}
+
+.gradient-title {
+  background-image: linear-gradient(
+    0deg,
+    rgba(4, 6, 79, 1) 0%,
+    rgba(14, 20, 51, 1) 19%,
+    rgba(108, 144, 230, 1) 100%
+  );
+  background-clip: text;
+  color: transparent;
+}
+
+.parallax.parallax {
+  position: relative;
+  z-index: -1;
+
+  box-shadow: inset 0px 100px 75px 0px rgba(0, 0, 0, 0.5);
+  background-image: url('/sky.jpg');
+  background-attachment: fixed;
+  background-position: top;
+  background-size: cover;
+
+  aspect-ratio: 4/3;
+  width: 100%;
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-areas: 'stack';
+}
+.parallax.parallax > * {
+  grid-column: unset;
+  grid-area: stack;
+  animation: parallax linear;
+  animation-timeline: scroll();
+}
+.parallax__front {
+  --parallax-speed: 5;
+  object-fit: cover;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.parallax__dust {
+  --parallax-speed: 15;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.hero {
+  --parallax-speed: 30;
+
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  translate: -50% 0;
+}
+
+@keyframes parallax {
+  to {
+    transform: translateY(calc(var(--parallax-speed) * 100px));
+  }
+}
+
+.thumbnail .keen-slider__slide {
+  height: 120px;
+}
+.thumbnail .keen-slider__slide {
+  cursor: pointer;
+}
+.thumbnail .keen-slider__slide.active {
+  border: 2px dashed black;
+}
+
+.history {
+  position: relative;
+}
+.history__content {
+  position: absolute !important;
+  top: 2rem;
+  z-index: 1;
+}
+
+.thumbnail {
+  --background: rgba(34, 59, 110, 0.5);
+  position: absolute !important;
+  bottom: 0;
+  z-index: 1000;
+  padding-block: 25px;
+  box-shadow: 0 0 0 100vmax var(--background);
+  background: var(--background);
+  clip-path: inset(0 -100vmax);
+}
+
+.keen-slider__slide > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.keen-slider__slide {
+  height: 100svh;
+}
+
+.team__content {
+  display: flex;
+  flex-direction: column;
+}
+
+[role='tablist'] {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+[role='tab'] {
+  color: var(--clr-secondary-300);
+  font-family: var(--font-family-heading);
+  display: block;
+  padding: 0.3em 1rem;
+  text-decoration: solid transparent;
+  transition: all 0.3s ease-out;
+}
+
+[role='tab'][aria-selected='true'] {
+  color: var(--clr-secondary-400);
+  background: var(--clr-secondary-300);
+  text-decoration: underline currentColor 3px;
+  text-underline-offset: 0.2em;
+}
+
+.tabs-panels {
+  position: relative;
+}
+[role='tabpanel'] {
+}
+[role='tabpanel'] > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.schedule {
+  padding: 0.5rem 2rem;
+  background: var(--clr-primary-100);
+  opacity: 0.9;
+  max-width: 35ch;
+  margin: 5em 0 7em 0;
+}
+
+.schedule > h3 {
+  font-size: var(--fs-700);
+  text-transform: uppercase;
+  color: var(--clr-secondary-400);
+  font-family: var(--font-family-heading);
+}
+
+.schedule div {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule > div {
+  gap: 1.5rem;
+}
+
+.schedule div > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+#panel-2 .schedule {
+  margin: 7em 0 5em auto;
+}
+
+footer > div {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer span {
+  text-transform: uppercase;
+  color: var(--clr-primary-300);
+}
+
+@media (min-width: 900px) {
+  .hero {
+    --parallax-speed: 15;
+    bottom: 41vw;
+    translate: -58% 0;
+  }
+  .history__p {
+    padding-inline-start: 5em;
+  }
+
+  .team__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
