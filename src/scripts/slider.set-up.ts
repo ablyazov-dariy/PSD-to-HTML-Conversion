@@ -1,8 +1,8 @@
-import KeenSlider from 'keen-slider';
+import KeenSlider, { KeenSliderHooks, KeenSliderInstance } from 'keen-slider';
 import 'keen-slider/keen-slider.css';
 
 export function setUpSlider(): void {
-  function ThumbnailPlugin(main: any) {
+  function ThumbnailPlugin(main: KeenSliderInstance) {
     return (slider: {
       slides: any[];
       on: (arg0: string, arg1: () => void) => void;
@@ -14,6 +14,7 @@ export function setUpSlider(): void {
           slide.classList.remove('active');
         });
       }
+
       function addActive(idx: any) {
         slider.slides[idx].classList.add('active');
       }
@@ -38,7 +39,8 @@ export function setUpSlider(): void {
       });
     };
   }
-  const slider = new KeenSlider('#my-keen-slider');
+
+  const slider: KeenSliderInstance<{}, {}, KeenSliderHooks> = new KeenSlider('#my-keen-slider');
   new KeenSlider(
     '#thumbnails',
     {
